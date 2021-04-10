@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="/static/favicon.png">
+  <title>SLink | URL Shortner & Custom Link Shortener</title>
+  <link rel="stylesheet" href="/static/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <!-- Bootstrap core CSS -->
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="/static/css/album.css" rel="stylesheet"> </head>
+<body>
+  <header>
+    <div class="collapse bg-dark" id="navbarHeader">
+      <div class="container" style="margin-bottom: -20px">
+        <div class="row">
+          <div class="col-sm-12 col-md-12 py-4">
+            <h5 class="text-white">
+                        <a href="https://github.com/404rgr/SLink" target="_blank">
+                           <span id='text'></span>
+                           <div class='console-underscore' id='console' style="color: red">&#95;</div>
+                        </a>
+                     </h5> </div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+      <div class="container d-flex justify-content-between">
+        <div class="navbar-brand d-flex align-items-center"> <i class="fa fa-link" style="padding-right: 5px"></i> <strong>SLink</strong> </div>
+        <div style="margin-left: 15px"> <strong>
+                      <button class="btn btn-secondary btn-sm" tabindex="-1" role="button" aria-disabled="false" onclick="see_all_urls()">See all URLs</button>
+                    </strong>
+          <button class="navbar-toggler btn-sm" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" style="padding-bottom: 10px"> <i class="fa fa-question"></i>
+            <!-- <span class="navbar-toggler-icon"></span> --></button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main role="main">
+    <section class="jumbotron" style="display: none;" id="zone">
+      <div class="container">
+        <div class="row" id="table_result" style="display: none;">
+          <h2 style="padding: 12px" class="jumbotron-heading"><b>List of links</b></h2>
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 40%">Original URL</th>
+                <th scope="col" style="width: 50%">short url</th>
+                <th style="width: 10%">Date</th>
+              </tr>
+            </thead>
+            <tbody id="data_u"> </tbody>
+          </table> <a href="/" class="btn btn-primary btn-sm">Shorten URL</a> </div>
+      </div>
+      <div class="container" style="width: 70%">
+        <div class="bg-success" style="color: white;display: none;" id="result">
+          <h2 style="padding: 12px" class="jumbotron-heading"><b>Success to shorten it</b></h2>
+          <div class="form-group row" style="padding-left: 10%; padding-right: 10%; padding-bottom: 11px">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Addon To Right" value="..." aria-describedby="basic-addon4" id="urlshorten" readonly>
+              <div class="input-group-append">
+                <button type="button" onclick="copy_text()" class="btn btn-primary" id="basic-addon4"><i class="ft-user"></i> Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="slink" style="display: block;">
+          <h2 style="padding: 12px" class="jumbotron-heading"><b>Shorten your link</b><b>!</b></h2>
+          <form method="POST" onsubmit="return false" name="pausiForm">
+            <div class="form-group row">
+              <label for="nama" class="col-sm-2 col-form-label">Url Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="Your long url (with http/s protocol)" name="url"> </div>
+            </div>
+            <div class="form-group row">
+              <label for="nama" class="col-sm-2 col-form-label">Costume Path</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="fill in the path to be generated, or you can just leave it blank" name="path"> </div>
+            </div>
+            <center>
+              <label class="col-form-label text-danger" id="errorp" style="display: none;">Costume Path</label>
+            </center>
+          </form>
+          <button onclick='submit()' class="btn btn-primary" style="width: 20%" type="button">Shorten</button>
+        </div>
+      </div>
+    </section>
+    <div class="container" id="pausi2" style="display: none;">
+      <div style="height: 50px"></div>
+      <center>
+        <h2 style="padding: 12px" class="jumbotron-heading">Loading...</h2>
+        <div id='loadings' class="loading" style="display:block;"> <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/35771931234507.564a1d2403b3a.gif" width="200" height="200"> </div>
+      </center>
+      <div style="height: 150px"></div>
+    </div>
+    <div class="container" id="xsec" style="display: none;">
+      <h2 style="padding: 12px" class="jumbotron-heading">URL Shorten Result</h2>
+      <div class="box">
+        <div class="form-group row">
+          <label for="nama" class="col-sm-2 col-form-label">Url Result</label>
+          <div class="col-sm-10"> <strong id="link">https://site.com/</strong> </div>
+        </div>
+        <div class="form-group row">
+          <label for="nama" class="col-sm-2 col-form-label">Message</label>
+          <div class="col-sm-10">
+            <p>kirim link diatas ke target kamu dan suruh/bujuk dia ketika masuk ke situs untuk klik izinkan (untuk akses ke kamera), dan pastikan juga target yang dikirimkan link ini browsernya support javascript.</p>
+          </div>
+          <div style="padding: 17px">
+            <button type="submit" class="btn btn-danger" onclick="cls()">Restart & Clear Cookies!</button>
+          </div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%;height: 100%">Taking pictures automatically...</div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="text-muted">
+    <div class="container">
+      <p><a href="https://github.com/404rgr/SLink" target="_blank" style="color: #5d5d5d">Slink &copy; 2021</a></p>
+    </div>
+  </footer>
+  <script type="text/javascript">
+  document.getElementById('zone').style.display = "Inline";
+
+  function submit() {
+    if(valid()) {
+      document.getElementById('zone').style.display = "none";
+      document.getElementById('pausi2').style.display = "Block";
+      var url = document.forms['pausiForm']["url"].value;
+      var path = document.forms['pausiForm']["path"].value;
+      sendRequest(url, path);
+      document.getElementById('pausi2').style.display = "none";
+      document.getElementById('zone').style.display = "Block";
+    }
+  }
+
+  function sendRequest(url, path) {
+    var costume = path;
+    var url = url;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if(this.readyState == 4 && this.status == 200) {
+        // document.getElementById("result").innerHTML = this.responseText;
+        // alert(this.responseText);
+        data = JSON.parse(this.responseText);
+        if(data && data['status'] == 200) {
+          document.getElementById('urlshorten').value = 'http://' + location.host + '/' + data['path'];
+          document.getElementById('result').style.display = "Block";
+          document.getElementById('errorp').style.display = "none";
+          document.forms['pausiForm']["url"].value = '';
+          document.forms['pausiForm']["path"].value = '';
+        } else {
+          document.getElementById('result').style.display = "none";
+          document.getElementById('errorp').innerHTML = data['message'];
+          document.getElementById('errorp').style.display = "Block";
+        }
+      }
+    };
+    xhttp.open("POST", "/api/add", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("costume=" + costume + "&url=" + url);
+  }
+
+  function valid() {
+    var url = document.forms['pausiForm']["url"].value;
+    if(url != "") {
+      if(validURL(url)) {
+        return true;
+      } else {
+        document.getElementById('result').style.display = "none";
+        document.getElementById('errorp').innerHTML = "The url you entered is invalid";
+        document.getElementById('errorp').style.display = "Block";
+      }
+    } else {
+      alert('Harap isi semua form input url!');
+    }
+  }
+
+  function copy_text() {
+    document.getElementById("urlshorten").select();
+    document.execCommand("copy");
+  }
+
+  function validURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(.*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+    return !!pattern.test(str);
+  }
+
+  function all_data() {
+    var xhr = new XMLHttpRequest();
+    var url = "/api/all";
+    xhr.onreadystatechange = function() {
+      if(this.readyState == 4 && this.status == 200) {
+        // document.getElementById("hasil").innerHTML = this.responseText;
+        var sad = JSON.parse(this.responseText);
+        var base_url = 'https://' + location.host
+        var finish = sad.map(tired => {
+          return `<tr>
+                            <td>${escapeHtml(tired['url'])}</td>
+                            <td>${base_url}/${escapeHtml(tired['url_path'])}</td>
+                            <td>${escapeHtml(tired['date'])}</td>
+                          </tr>`;
+        });
+        document.getElementById('data_u').innerHTML = finish.join('</div>');
+      }
+    };
+    xhr.open("GET", url, true);
+    xhr.send();
+  }
+
+  function see_all_urls() {
+    document.getElementById('zone').style.display = "none";
+    document.getElementById('pausi2').style.display = "Block";
+    all_data();
+    document.getElementById('zone').style.display = "Inline";
+    document.getElementById('slink').style.display = "none";
+    document.getElementById('result').style.display = "none";
+    document.getElementById("table_result").style.display = "block";
+    document.getElementById('pausi2').style.display = "none";
+  }
+  function escapeHtml(text) {
+    var map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    
+    return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+  }
+  </script>
+  <script type="text/javascript">
+  CT(['SLink is a simple url shortener tool made with Flask (Python)', 'https://github.com/404rgr/SLink, This application code is open source licensed under the GNU GPL v3.'], 'text', ['white', 'white']);
+
+  function CT(words, id, colors) {
+    if(colors === undefined) colors = ['#fff'];
+    var visible = true;
+    var con = document.getElementById('console');
+    var letterCount = 1;
+    var x = 1;
+    var waiting = false;
+    var target = document.getElementById(id)
+    target.setAttribute('style', 'color:' + colors[0])
+    window.setInterval(function() {
+      if(letterCount === 0 && waiting === false) {
+        waiting = true;
+        target.innerHTML = words[0].substring(0, letterCount)
+        window.setTimeout(function() {
+          var usedColor = colors.shift();
+          colors.push(usedColor);
+          var usedWord = words.shift();
+          words.push(usedWord);
+          x = 1;
+          target.setAttribute('style', 'color:' + colors[0])
+          letterCount += x;
+          waiting = false;
+        }, 1000)
+      } else if(letterCount === words[0].length + 1 && waiting === false) {
+        waiting = true;
+        window.setTimeout(function() {
+          x = -1;
+          letterCount += x;
+          waiting = false;
+        }, 1000)
+      } else if(waiting === false) {
+        target.innerHTML = words[0].substring(0, letterCount)
+        letterCount += x;
+      }
+    }, 40)
+    window.setInterval(function() {
+      if(visible === true) {
+        con.className = 'console-underscore hidden'
+        visible = false;
+      } else {
+        con.className = 'console-underscore'
+        visible = true;
+      }
+    }, 400)
+  }
+  $(".loading").height($(window).height());
+  $(".loading").width($(window).width());
+  $(".loading img").css({
+    paddingTop: ($(".loading").height() - $(".loading img").height()) / 2,
+    paddingLeft: ($(".loading").width() - $(".loading img").width()) / 2
+  });
+  $(window).resize(function() {
+    "use strict";
+    $(".loading").height($(window).height());
+    $(".loading").width($(window).width());
+    $(".loading img").css({
+      paddingTop: ($(".loading").height() - $(".loading img").height()) / 2,
+      paddingLeft: ($(".loading").width() - $(".loading img").width()) / 2
+    });
+  });
+  </script>
+  <!-- Bootstrap core JavaScript
+         ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="/static/js/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+  <script>
+  window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+  </script>
+  <script src="/static/js/popper.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/js/holder.min.js"></script>
+</body>
+</html>
