@@ -5,20 +5,21 @@ import json
 import re
 import random
 import string
-
-ip_list_block    = []
-user_agent_block = ""
-banned_path      = ['about']
+sqlitedb         = "short_link.db" #sqlite database name
+ip_list_block    = [] #list of ip you want permission
+user_agent_block = "" #block unauthorized user agents
+banned_path      = ['about'] #a list of paths that should not be shortlinked
 
 app = Flask(
     __name__,
     static_folder='static',
     template_folder='templates'
 )
+
 app.secret_key = 'super secret key'
 app.config['SESSION_TYPE'] = 'filesystem'
 #sess.init_app(app)
-app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///short_link.db"
+app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///"+sqlitedb
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=True
 
 db = SQLAlchemy(app)
@@ -53,20 +54,17 @@ def page_404(e):
     data = Short_link.query.filter(Short_link.url_path==str(path)).all()
     if data and data[0]:
        return redirect(data[0].url)
-       #return data[0].url
     else:
        return "Page Not Found", 404
 
 @app.route('/')
-def Index():
+def index():
    return render_template('index.html', short_link_data = Short_link.query.all() )
 
 @app.route("/api/add", methods=["GET", "POST"])
-def index():
-  resp = Response()
-  resp.headers['Access-Control-Allow-Origin'] = '*'
+def add():
   if request.method == "GET":
-     return("POST METHOD REQUIRED!",resp)
+     return("POST METHOD REQUIRED!")
   else:
       try:
         url_path = request.form["costume"]
@@ -111,7 +109,7 @@ def index():
         })
 
 @app.route("/api/all")
-def all_data():
+def all():
   data = Short_link.query.all()
   tmp = []
   for x in data:
@@ -127,4 +125,4 @@ def all_data():
 
 if __name__ == '__main__':
   db.create_all()
-  app.run(host="0.0.0.0",port=3000, debug=True)
+  app.run(debug=True)
