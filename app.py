@@ -20,7 +20,6 @@ app = Flask(
 
 app.secret_key = 'super secret key'
 app.config['SESSION_TYPE'] = 'filesystem'
-#sess.init_app(app)
 app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///"+sqlitedb
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=True
 
