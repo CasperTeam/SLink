@@ -5,7 +5,7 @@ SLink is a simple url shortener tool made with Flask (_Python_)
 _[https://slink.pythonanywhere.com/](https://saweria.co/pausi)_
 
 
-### Screenshot
+### Screenshots
 ![screenshot_slink](https://user-images.githubusercontent.com/43511729/114366639-a0f10500-9b49-11eb-8249-a883c72890d0.png)
 
 ### Installation & Run Web
