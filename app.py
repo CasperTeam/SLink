@@ -1,5 +1,5 @@
 # https://github.com/404rgr/SLink
-# Author: Pausi / Zeerx7
+# Author: Pausi
 from flask import Flask, render_template, request, redirect, flash, Response, abort
 from flask_sqlalchemy import SQLAlchemy
 import datetime
